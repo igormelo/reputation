@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>
-      My Feed
+      Meu feed
     </ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="composeTweet()">
@@ -12,7 +12,6 @@
 </ion-header>
  
 <ion-content>
-    <button ion-button full (click)="loginWithTwitter()">Login with Twitter</button>
   <ion-refresher (ionRefresh)="loadTimeline($event)">
     <ion-refresher-content></ion-refresher-content>
   </ion-refresher>
