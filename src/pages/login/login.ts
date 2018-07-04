@@ -3,6 +3,7 @@ import { TwitterConnect } from '@ionic-native/twitter-connect';
 import { IonicPage, NavController, AlertController, LoadingController, Loading,NavParams } from 'ionic-angular';
 import { TwitterProvider } from '../../providers/twitter/twitter';
 import { TimelinePage } from '../timeline/timeline';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 
 @IonicPage()
@@ -12,19 +13,27 @@ import { TimelinePage } from '../timeline/timeline';
 })
 export class LoginPage {
   loading: Loading;
-  constructor(public navCtrl: NavController, private twitter: TwitterConnect, private twitterProvider: TwitterProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
+  constructor(public navCtrl: NavController, private twitter: TwitterConnect, private twitterProvider: TwitterProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController,public nativeStorage: NativeStorage) {
   }
 
   public loginWithTwitter() {
+    let nav = this.navCtrl;
     this.showLoading();
     this.twitter.login().then((data) => {
       this.twitterProvider.setTokens(data.token, data.secret);
-      this.loading.dismiss().then(() => {
-        this.navCtrl.setRoot(TimelinePage);
+      this.nativeStorage.setItem('twitter_user',{
+        token: data.token,
+        secret: data.secret
+      }).then(()=>{
+        this.loading.dismiss().then(() => {
+          nav.push(TimelinePage);
+          this.loading.dismiss();
+        });
+      }, error => {
+        this.showError(error);
+        this.loading.dismiss();
       });
-    }, error => {
-      this.showError(error);
-    });
+      })
   }
  
   private showLoading() {

@@ -38,7 +38,7 @@ export class HomePage {
         {
           text: 'Tweet',
           handler: data => {
-            this.postTweet(data.text + "message from TWEETAPP");
+            //this.postTweet(data.text + "message from TWEETAPP");
           }
         }
       ]
@@ -46,18 +46,18 @@ export class HomePage {
     prompt.present();
   }
 
-  public postTweet(text) {
-    this.twitterProvider.postTweet(text).subscribe(res => {
+  // public postTweet(text) {
+  //   this.twitterProvider.postTweet(text).subscribe(res => {
       
-      let toast = this.toastCtrl.create({
-        message: 'Tweet posted!',
-        duration: 3000
-      });
-      toast.present();
-    }, err => {
+  //     let toast = this.toastCtrl.create({
+  //       message: 'Tweet posted!',
+  //       duration: 3000
+  //     });
+  //     toast.present();
+  //   }, err => {
       
-    });
-  }
+  //   });
+  // }
   private showError(text) {
       let alert = this.alertCtrl.create({
         title: 'Fail',

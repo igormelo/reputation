@@ -14,6 +14,7 @@ import { TwitterConnect } from '@ionic-native/twitter-connect';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { LoginPage } from '../pages/login/login';
 import { TimelinePage } from '../pages/timeline/timeline';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @NgModule({
   declarations: [
@@ -43,7 +44,8 @@ import { TimelinePage } from '../pages/timeline/timeline';
     TwitterConnect,
     InAppBrowser,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    TwitterProvider
+    TwitterProvider,
+    NativeStorage
   ]
 })
 export class AppModule {}

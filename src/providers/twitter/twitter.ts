@@ -21,7 +21,7 @@ export class TwitterProvider {
     this.tokenSecret = tokenSecret;
   }
 
-  postTweet(text) {
+  postTweet(text, token,secret) {
     return this.twitter.post(
       'https://api.twitter.com/1.1/statuses/update.json',
       {
@@ -32,13 +32,13 @@ export class TwitterProvider {
         consumerSecret: this.consumerSecret
       },
       {
-        token: this.token,
-        tokenSecret: this.tokenSecret
+        token: token,
+        tokenSecret: secret
       }
     )
       .map(res => res.json());
   }
-  getHomeTimeline() {
+  getHomeTimeline(token,secret) {
     return this.twitter.get(
       'https://api.twitter.com/1.1/statuses/home_timeline.json',
       {
@@ -49,8 +49,8 @@ export class TwitterProvider {
         consumerSecret: this.consumerSecret
       },
       {
-        token: this.token,
-        tokenSecret: this.tokenSecret
+        token: token,
+        tokenSecret: secret
       }
     )
       .map(res => res.json());

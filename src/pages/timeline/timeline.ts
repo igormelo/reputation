@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, ToastController, LoadingController
 import { TwitterProvider } from '../../providers/twitter/twitter';
 import { Observable } from 'rxjs/Observable';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { NativeStorage } from '@ionic-native/native-storage';
 
 /**
  * Generated class for the TimelinePage page.
@@ -19,16 +20,18 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 export class TimelinePage {
   tweets: Observable<any[]>;
   loading: Loading;
-  constructor(public navCtrl: NavController, private twitterProvider: TwitterProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private iab: InAppBrowser) {
+  constructor(public navCtrl: NavController, private twitterProvider: TwitterProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController, private toastCtrl: ToastController, private iab: InAppBrowser, public nativeStorage: NativeStorage) {
   }
 
   ionViewWillEnter() {
-    this.loadTimeline();
+    this.nativeStorage.getItem('twitter_user').then((data)=>{
+      this.loadTimeline(data);
+    })
   }
 
   public loadTimeline(refresher?) {
     this.showLoading();
-    this.tweets = this.twitterProvider.getHomeTimeline();
+    this.tweets = this.twitterProvider.getHomeTimeline(refresher.token, refresher.secret);
     this.tweets.subscribe(data => {
       this.loading.dismiss();
       refresher.complete();
@@ -54,7 +57,9 @@ export class TimelinePage {
         {
           text: 'Tweet',
           handler: data => {
-            this.postTweet(data.text);
+            this.nativeStorage.getItem('twitter_user').then((dado)=>{
+              this.postTweet(data.text, dado.secret, dado.token);
+            }) 
           }
         }
       ]
@@ -74,9 +79,9 @@ export class TimelinePage {
     let browser = this.iab.create(url, 'blank');
   }
 
-  public postTweet(text) {
+  public postTweet(text, token,secret) {
     this.showLoading();
-    this.twitterProvider.postTweet(text).subscribe(res => {
+    this.twitterProvider.postTweet(text,token,secret).subscribe(res => {
       this.loading.dismiss();
       let toast = this.toastCtrl.create({
         message: 'Tweet posted!',
