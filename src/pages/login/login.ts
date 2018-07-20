@@ -4,6 +4,7 @@ import { IonicPage, NavController, AlertController, LoadingController, Loading,N
 import { TwitterProvider } from '../../providers/twitter/twitter';
 import { TimelinePage } from '../timeline/timeline';
 import { NativeStorage } from '@ionic-native/native-storage';
+import { HomePage } from '../home/home';
 
 
 @IonicPage()
@@ -26,7 +27,7 @@ export class LoginPage {
         secret: data.secret
       }).then(()=>{
         this.loading.dismiss().then(() => {
-          nav.push(TimelinePage);
+          nav.push(HomePage);
           this.loading.dismiss();
         });
       }, error => {

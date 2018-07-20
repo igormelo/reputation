@@ -15,13 +15,15 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { LoginPage } from '../pages/login/login';
 import { TimelinePage } from '../pages/timeline/timeline';
 import { NativeStorage } from '@ionic-native/native-storage';
+import { TabsPage } from '../pages/tabs/tabs';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     LoginPage,
-    TimelinePage
+    TimelinePage,
+    TabsPage
   ],
   imports: [
     BrowserModule,
@@ -34,7 +36,8 @@ import { NativeStorage } from '@ionic-native/native-storage';
     MyApp,
     HomePage,
     LoginPage,
-    TimelinePage
+    TimelinePage,
+    TabsPage
   ],
   providers: [
     StatusBar,

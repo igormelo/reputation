@@ -1,47 +1,24 @@
 <ion-header>
-  <ion-navbar color="primary">
-    <ion-title>
-      My Feed
-    </ion-title>
-    <ion-buttons end>
-      <button ion-button icon-only (click)="composeTweet()">
-        <ion-icon name="create"></ion-icon>
-      </button>
-    </ion-buttons>
+  <ion-navbar no-border-top>
+    <ion-title>Profile</ion-title>
   </ion-navbar>
 </ion-header>
- 
-<ion-content>
-    <button ion-button full (click)="loginWithTwitter()">Login with Twitter</button>
-  <ion-refresher (ionRefresh)="loadTimeline($event)">
-    <ion-refresher-content></ion-refresher-content>
-  </ion-refresher>
- 
-  <ion-card *ngFor="let tweet of tweets | async">
- 
-    <ion-item>
-      <ion-avatar item-left>
-        <img src="{{tweet.user.profile_image_url}}">
-      </ion-avatar>
-      <h2>{{tweet.user.name}}</h2>
-      <p>{{dateForTweet(tweet.created_at)}}</p>
-    </ion-item>
- 
-    <img src="{{tweet.extended_entities.media[0].media_url}}" *ngIf="tweet.extended_entities">
- 
-    <ion-card-content>
-      <p>{{tweet.text}}</p>
-    </ion-card-content>
- 
-    <ion-row>
-      <ion-col *ngIf="tweet.entities.urls.length > 0">
-        <button ion-button clear small (click)="openLinkUrl(tweet.entities.urls[0].url)">
-          <ion-icon name="open"></ion-icon>
-          <div>Open Link</div>
-        </button>
-      </ion-col>
-    </ion-row>
- 
-  </ion-card>
- 
+
+<ion-content padding>
+      <h3 id="profile-name">Lord</h3>
+        <img id="profile-image" src="https://pbs.twimg.com/profile_images/1006519843598856193/hu3FaEce_400x400.jpg">
+        <div class="post-options">
+          <i class="icon-reply"></i>
+          <i class="icon-shuffle"></i>
+        </div>
+        <div>
+            <ion-item>
+                <ion-label color="primary">Desejo do dia:</ion-label>
+                <ion-input placeholder="adicione um desejo"></ion-input>
+              </ion-item>
+              
+        </div>
+        <div>
+            <button ion-button round icon-end>Publicar<ion-icon name="star"></ion-icon></button>
+        </div> 
 </ion-content>

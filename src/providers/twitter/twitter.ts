@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TwitterService } from 'ng2-twitter';
 import 'rxjs/add/operator/map';
+import { NativeStorage } from '@ionic-native/native-storage';
 /*
   Generated class for the TwitterProvider provider.
 
@@ -13,15 +14,15 @@ export class TwitterProvider {
   tokenSecret = null;
   consumerKey = '2PbGtQGmKle7Mh2fJGrPPe8ZH';
   consumerSecret = 'MEEkWhJut5w3Q8J42K5nULPvKtAPBhrUPz9d59EWmTj2D3hdkS';
-  constructor(private twitter: TwitterService) {
+  constructor(private twitter: TwitterService, public nativeStorage: NativeStorage) {
 
   }
   setTokens(token, tokenSecret) {
-    this.token = token;
-    this.tokenSecret = tokenSecret;
+      this.token = token;
+      this.tokenSecret = tokenSecret;
   }
 
-  postTweet(text, token,secret) {
+  postTweet(text) {
     return this.twitter.post(
       'https://api.twitter.com/1.1/statuses/update.json',
       {
@@ -32,13 +33,13 @@ export class TwitterProvider {
         consumerSecret: this.consumerSecret
       },
       {
-        token: token,
-        tokenSecret: secret
+        token: this.token,
+        tokenSecret: this.tokenSecret
       }
     )
       .map(res => res.json());
   }
-  getHomeTimeline(token,secret) {
+  getHomeTimeline() {
     return this.twitter.get(
       'https://api.twitter.com/1.1/statuses/home_timeline.json',
       {
@@ -49,8 +50,8 @@ export class TwitterProvider {
         consumerSecret: this.consumerSecret
       },
       {
-        token: token,
-        tokenSecret: secret
+        token: this.token,
+        tokenSecret: this.tokenSecret
       }
     )
       .map(res => res.json());

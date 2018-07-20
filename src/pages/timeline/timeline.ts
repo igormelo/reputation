@@ -25,13 +25,13 @@ export class TimelinePage {
 
   ionViewWillEnter() {
     this.nativeStorage.getItem('twitter_user').then((data)=>{
-      this.loadTimeline(data);
+      this.loadTimeline();
     })
   }
 
   public loadTimeline(refresher?) {
     this.showLoading();
-    this.tweets = this.twitterProvider.getHomeTimeline(refresher.token, refresher.secret);
+    this.tweets = this.twitterProvider.getHomeTimeline();
     this.tweets.subscribe(data => {
       this.loading.dismiss();
       refresher.complete();
@@ -58,7 +58,7 @@ export class TimelinePage {
           text: 'Tweet',
           handler: data => {
             this.nativeStorage.getItem('twitter_user').then((dado)=>{
-              this.postTweet(data.text, dado.secret, dado.token);
+              this.postTweet(data.text, dado.token, dado.secret);
             }) 
           }
         }
@@ -79,9 +79,9 @@ export class TimelinePage {
     let browser = this.iab.create(url, 'blank');
   }
 
-  public postTweet(text, token,secret) {
+  public postTweet(text,token,secret) {
     this.showLoading();
-    this.twitterProvider.postTweet(text,token,secret).subscribe(res => {
+    this.twitterProvider.postTweet(text).subscribe(res => {
       this.loading.dismiss();
       let toast = this.toastCtrl.create({
         message: 'Tweet posted!',
